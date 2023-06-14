@@ -33,6 +33,7 @@ def getusers():
 
 @app.route('/users') # JSON: json file imported and then jsonify() it
 def users():
+    print(request.cookies) #request: object, cookie: attribute
     with open('users.json') as file: #with: context manager, automatically closes the file once the indent is finished
         users = json.load(file) #json.load(): loads the json file
     return jsonify(users) #jsonify(): converts the json object to a response object with application/json mimetype
@@ -54,6 +55,7 @@ def user(id): #Making a function and passing id as parameter
         if user['id'] == id: #user['id']: id of the user
             return jsonify(user) #if matches return the user
     return jsonify({}) #if not matches return empty json object
+
 
 
 #Methods: GET: to get data, POST: to submit data, PUT: to update data, DELETE: to delete data, HEAD, OPTIONS
