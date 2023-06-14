@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+import json
 
 app = Flask(__name__) #Flask initialization, name: name of the module or package of the application
 @app.route('/') #Decorator: wraps a function, route: URL rule as string, 
@@ -30,10 +31,16 @@ def projects():
 def getusers():
     return jsonify({'users': [{'id': 1, 'name': 'John'}, {'id': 2, 'name': 'Susan'}]})
 
-@app.route('/users', methods=['GET', 'POST']) #Methods: GET: to get data, POST: to submit data, PUT: to update data, DELETE: to delete data, HEAD, OPTIONS
+@app.route('/users')
+def users():
+    with open('users.json') as file:
+        users = json.load(file)
+    return jsonify(users)
+
+@app.route('/method', methods=['GET', 'POST']) #Methods: GET: to get data, POST: to submit data, PUT: to update data, DELETE: to delete data, HEAD, OPTIONS
 # POST request can be sent from javascript or HTML form or from a python script or from a REST client(postman)
 # By default it is get request
-def users():
+def method():
     if request.method == 'POST':
         return 'POST'
     else:
