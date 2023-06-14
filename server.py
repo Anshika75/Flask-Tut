@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 app = Flask(__name__) #Flask initialization, name: name of the module or package of the application
 @app.route('/') #Decorator: wraps a function, route: URL rule as string, 
@@ -31,8 +31,13 @@ def getusers():
     return jsonify({'users': [{'id': 1, 'name': 'John'}, {'id': 2, 'name': 'Susan'}]})
 
 @app.route('/users', methods=['GET', 'POST']) #Methods: GET: to get data, POST: to submit data, PUT: to update data, DELETE: to delete data, HEAD, OPTIONS
+# POST request can be sent from javascript or HTML form or from a python script or from a REST client(postman)
+# By default it is get request
 def users():
-
+    if request.method == 'POST':
+        return 'POST'
+    else:
+        return 'GET'
 
 if __name__ == '__main__':
     app.run(debug=True) #Debug mode: server will reload itself on code changes, and provide a debugger
